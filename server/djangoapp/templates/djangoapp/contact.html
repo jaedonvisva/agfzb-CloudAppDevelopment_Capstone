@@ -12,22 +12,20 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
 </head>
-
     <body>
-    <!-- Remove this line the first time you edit this file -->
-     This is the index page of your Django app!
-    <!--Add a nav bar here -->
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars Dealerships</a>
-                <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
-                <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars Dealerships</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!--Add a dealer table here -->
-
+        </nav>
+        <ul>
+            <li>Person #1: 123-456-7890</li>
+            <li>Person #2: 098-765-4321</li>
+            <li>Person #3: 102-938-4756</li>
+        </ul>
     </body>
-
 </html>
