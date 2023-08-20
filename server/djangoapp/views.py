@@ -34,31 +34,29 @@ def contact(request):
 # Create a `login_request` view to handle sign in request
 def login_request(request):
     context = {}
-    # Handles POST request
     if request.method == "POST":
-        # Get username and password from request.POST dictionary
+        # pull from dictionary
         username = request.POST['username']
         password = request.POST['password']
-        # Try to check if provide credential can be authenticated
-        user = authenticate(username=username, password=password)
+        # check auth
+        user = authenticate(username=username, password=password) 
         if user is not None:
-            # If user is valid, call login method to login current user
+            # login if valid
             login(request, user)
-            return redirect('djangoapp:index')
+            return render(request, 'djangoapp/index.html', context)
         else:
-            # If not, return to login page again
-            return render(request, 'djangoapp/login.html', context)
+            return render(request, 'djangoapp/index.html', context)
     else:
-        return render(request, 'djangoapp/login.html', context)
+        return render(request, 'djangoapp/index.html', context)
 
 # Create a `logout_request` view to handle sign out request
 def logout_request(request):
-    def logout_request(request):
-        print("Log out the user `{}`".format(request.user.username))
-        # Logout user in the request
-        logout(request)
-        # Redirect user back to course list view
-        return redirect('djangoapp:index')
+    context = {}
+    # get user from session id
+    print("Log out the user `{}`".format(request.user.username))
+    logout(request)
+    # redirect back to the index.html
+    return render(request, 'djangoapp/index.html', context)
 
 # Create a `registration_request` view to handle sign up request
 # def registration_request(request):
