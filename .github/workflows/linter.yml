@@ -10,7 +10,7 @@ jobs: # list of things to do
   lint_function_js:
     name: Linting JavaScript Function 
     runs-on: ubuntu-latest 
-    steps: # list of steps
+    steps: # list of steps 
       - name: Install NodeJS
         uses: actions/setup-node@v3
         with:
