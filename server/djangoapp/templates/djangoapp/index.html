@@ -63,7 +63,7 @@
                     {% for dealer in dealerships %}
                     <tr>
                         <td>{{dealer.id}}</td>
-                        <td>{{dealer.full_name}}</td>
+                        <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
                         <td>{{dealer.city}}</td>
                         <td>{{dealer.address}}</td>
                         <td>{{dealer.zip}}</td>
@@ -74,5 +74,9 @@
             </table>
             </div>
     </body>
-
+    <script>
+        $(function() {
+            $('#table').bootstrapTable()
+        })
+      </script>
 </html>
