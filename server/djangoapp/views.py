@@ -102,12 +102,40 @@ def get_dealer_details(request, dealer_id):
         url_ds = f"https://us-south.functions.appdomain.cloud/api/v1/web/9c7396a4-e144-463b-8369-f5ea0e853558/dealership-package/get-dealership?id{dealer_id}"
         # Get dealers from the URL
         context = {
-            "dealer": get_dealers_from_cf(url_ds)[0],
-            "reviews": get_dealer_reviews_from_cf(url_r, dealer_id),
+            "dealer": get_dealers_from_cf(url_ds)[dealer_id-1],
+            "reviews": get_dealer_reviews_from_cf(url_r, dealer_id-1),
         }
         
         return render(request, 'djangoapp/dealer_details.html', context)
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    url_ds = f"https://us-south.functions.appdomain.cloud/api/v1/web/9c7396a4-e144-463b-8369-f5ea0e853558/dealership-package/get-dealership?id{dealer_id}"
+    if request.method == "GET":
+            context = {}  
+            context['dealerid'] = dealer_id
+            context['dealer'] = get_dealers_from_cf(url_ds)[dealer_id-1]
+            cars = CarModel.objects.filter(dealer_id=int(dealer_id)).all()
+            context['cars'] = cars
+            return render(request, 'djangoapp/add_review.html',context)
+    if request.method == "POST" and request.user.is_authenticated:
+        car = CarModel.objects.get(pk=int(request.POST['car']))
+        json_payload = {
+"review": 
+    {
+        "id": 1117,
+        "name": request.user.username,
+        "dealership": dealer_id,
+        "review": request.POST['content'],
+        "purchase": False,
+        "another": "field",
+        'purchase': bool(request.POST.get('purchase',False)),
+            'purchase_date': datetime.strptime(request.POST['purchasedate'], "%m/%d/%Y").isoformat()
+    }
+}
+        url= "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/69d2c467-206c-4606-b559-fa18d561d7e4/actions/dealership-package/post-review"
+        post_request(url=url, json_payload=json_payload)
+        
+        return redirect("djangoapp:dealer_details", dealer_id=dealer_id, dealer_name=dealer_name)
+    else:
+        return HttpResponse({"message":"Forbidden"})
 
